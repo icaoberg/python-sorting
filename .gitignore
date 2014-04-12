@@ -1,0 +1,7 @@
+build
+dist
+piksrt.ipynb
+.ipynb_checkpoints
+sorting.egg-info
+sorting/*.pyc
+*.sh

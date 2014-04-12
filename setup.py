@@ -22,4 +22,4 @@ setup(name = 'sorting',
         'Operating System :: OS Independent',
         'Intended Audience :: Education',
         'Programming Language :: Python'],
-      py_modules=['sorting.sort'])
+      py_modules=['sorting.sorting'])
