@@ -55,8 +55,20 @@ def bubble(unsorted_list):
     :type unsorted_list: list
     :rtype: list of sorted integers
 	'''
+	# adapted from snippet found in 
+	# http://www.w3resource.com/python-exercises/data-structures-and-algorithms/python-search-and-sorting-exercise-4.php
 
-	return None
+	steps = []
+
+	for passnum in range(len(unsorted_list)-1,0,-1):
+		for i in range(passnum):
+		    if unsorted_list[i]>unsorted_list[i+1]:
+		        temp = unsorted_list[i]
+		        unsorted_list[i] = unsorted_list[i+1]
+		        unsorted_list[i+1] = temp
+		        steps.append( copy(unsorted_list) )
+
+	return steps
 
 def merge(unsorted_list):
 	'''
@@ -92,7 +104,9 @@ def make_randomly_shuffled_list( length_of_shuffled_list ):
 	'''
 
 	list_of_integers = range( length_of_shuffled_list )
-	shuffle(list_of_integers)
+
+	for i in range(10):
+		shuffle(list_of_integers)
 
 	return list_of_integers
 
@@ -103,18 +117,15 @@ def animate_debug_results( results, output_directory='./' ):
 	TODO: try to make matplotlib.animate work on macosx
 	'''
 
-	arrays = results[0]
-	times = results[1]
-
 	if not exists(output_directory):
 		mkdir(output_directory)
 
 	i = 1
 	elapsed_time = 0
-	for array, t in zip(arrays,times):
+	for result in results:
 		elapsed_time += t
-		plt.plot(range(len(array)), array,'ob')
-		plt.xlabel("Elapsed time " + str(elapsed_time) + " in seconds at step " + str(i))
+		plt.plot( range( len(result), result, 'ob' )
+		plt.xlabel("Step " + str(i))
 		filename = output_directory + 'image' + str('%05d' % i) + '.png'
 		print "Saving " + filename
 		plt.savefig(filename)
@@ -123,4 +134,4 @@ def animate_debug_results( results, output_directory='./' ):
 	plt.close()
 
 	print "Attempting to make movie with ffmpeg"
-	system("ffmpeg -f image2 -r 1 -i " + output_directory + "image%05d.png -vcodec mpeg4 -y " + output_directory + "movie.mp4")
+	#system("ffmpeg -f image2 -r 1 -i " + output_directory + "image%05d.png -vcodec mpeg4 -y " + output_directory + "movie.mp4")
